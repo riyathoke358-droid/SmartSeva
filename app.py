@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
-from database import create_database, get_schemes
+
+from database import create_database, get_schemes, add_real_schemes
 
 # ---------------- PAGE CONFIGURATION ----------------
 
@@ -11,9 +12,121 @@ st.set_page_config(
 )
 
 create_database()
+add_real_schemes()
 
 # ---------------- CUSTOM DESIGN ----------------
+# ---------------- PROFESSIONAL DESIGN ----------------
 
+st.markdown("""
+<style>
+
+.stApp {
+    background: #f4f7fb;
+}
+
+.block-container {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.main-title {
+    font-size: 38px;
+    font-weight: 800;
+    color: #163568;
+}
+
+.subtitle {
+    font-size: 17px;
+    color: #64748b;
+}
+
+div[data-testid="stMetric"] {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+}
+
+div.stButton > button {
+    background-color: #1d4ed8;
+    color: white;
+    border-radius: 9px;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+}
+
+div.stButton > button:hover {
+    background-color: #163568;
+    color: white;
+}
+
+section[data-testid="stSidebar"] {
+    background-color: #eaf1fb;
+}
+
+h1, h2, h3 {
+    color: #163568;
+}
+
+</style>
+""", unsafe_allow_html=True)
+# ---------------- PROFESSIONAL DESIGN ----------------
+
+st.markdown("""
+<style>
+
+.stApp {
+    background: #f4f7fb;
+}
+
+.block-container {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.main-title {
+    font-size: 38px;
+    font-weight: 800;
+    color: #163568;
+}
+
+.subtitle {
+    font-size: 17px;
+    color: #64748b;
+}
+
+div[data-testid="stMetric"] {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+}
+
+div.stButton > button {
+    background-color: #1d4ed8;
+    color: white;
+    border-radius: 9px;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+}
+
+div.stButton > button:hover {
+    background-color: #163568;
+    color: white;
+}
+
+section[data-testid="stSidebar"] {
+    background-color: #eaf1fb;
+}
+
+h1, h2, h3 {
+    color: #163568;
+}
+
+</style>
+""", unsafe_allow_html=True)
 st.markdown("""
 <style>
 .stApp {
@@ -50,7 +163,38 @@ df = pd.DataFrame(rows, columns=columns)
 # ---------------- SIDEBAR ----------------
 
 st.sidebar.title("🇮🇳 SmartSeva")
+language = st.sidebar.selectbox(
+    "🌐 Select Language",
+    ["English", "हिंदी", "मराठी"]
+)
+translations = {
+    "English": {
+        "home": "Home",
+        "finder": "Scheme Finder",
+        "eligibility": "Eligibility Checker",
+        "details": "Scheme Details",
+        "guide": "Application Guide"
+    },
 
+    "हिंदी": {
+        "home": "मुख्य पृष्ठ",
+        "finder": "योजना खोजें",
+        "eligibility": "पात्रता जांचें",
+        "details": "योजना की जानकारी",
+        "guide": "आवेदन मार्गदर्शिका"
+    },
+
+    "मराठी": {
+        "home": "मुख्यपृष्ठ",
+        "finder": "योजना शोधा",
+        "eligibility": "पात्रता तपासा",
+        "details": "योजनेची माहिती",
+        "guide": "अर्ज मार्गदर्शक"
+    }
+}
+
+def t(key):
+    return translations[language][key]
 page = st.sidebar.radio(
     "Navigate",
     [
