@@ -1,10 +1,27 @@
 import sqlite3
 import os
 
+if os.path.isfile("data"):
+    raise RuntimeError(
+        "A file named data exists. Rename it and create a folder named data."
+    )
+
 os.makedirs("data", exist_ok=True)
+import sqlite3
+import os
+
+import os
+import sqlite3
+
+DATA_DIR = "data"
+
+os.makedirs(DATA_DIR, exist_ok=True)
+
+DB_PATH = os.path.join(DATA_DIR, "schemes.db")
 
 def connect_db():
-    return sqlite3.connect("data/schemes.db")
+    return sqlite3.connect(DB_PATH)
+
 
 def create_database():
 
@@ -95,3 +112,68 @@ def get_schemes():
     conn.close()
 
     return rows
+
+def add_real_schemes():
+
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    schemes = [
+        (
+            "PM-KISAN",
+            "Agriculture",
+            "Income support scheme for eligible farmer families.",
+            "Farmer",
+            0,
+            100,
+            999999999,
+            "Aadhaar and land records as applicable",
+            "Check the latest eligibility rules on the official portal.",
+            "https://pmkisan.gov.in/"
+        ),
+        (
+            "Ayushman Bharat PM-JAY",
+            "Healthcare",
+            "Health assurance scheme for eligible beneficiaries.",
+            "All",
+            0,
+            100,
+            999999999,
+            "Documents required for beneficiary verification",
+            "Check eligibility and beneficiary details on the official portal.",
+            "https://pmjay.gov.in/"
+        ),
+        (
+            "Post Matric Scholarship",
+            "Education",
+            "Scholarship assistance for eligible students after matriculation.",
+            "Student",
+            15,
+            100,
+            999999999,
+            "Income certificate, marksheet and other scheme-specific documents",
+            "Check the applicable scholarship rules and documents on the official portal.",
+            "https://www.myscheme.gov.in/"
+        )
+    ]
+
+    for scheme in schemes:
+
+        cursor.execute(
+            "SELECT id FROM schemes WHERE name = ?",
+            (scheme[0],)
+        )
+
+        if cursor.fetchone() is None:
+
+            cursor.execute("""
+                INSERT INTO schemes (
+                    name, category, description, occupation,
+                    min_age, max_age, max_income, documents,
+                    instructions, official_url
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """, scheme)
+
+    conn.commit()
+    conn.close()
