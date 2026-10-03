@@ -135,12 +135,16 @@ st.markdown("""
 .main-title {
     font-size: 38px;
     font-weight: bold;
+<style>
+h1 {
     color: #172554;
 }
+
 .subtitle {
     color: #64748b;
     font-size: 17px;
 }
+
 div.stButton > button {
     border-radius: 8px;
 }
@@ -165,31 +169,21 @@ df = pd.DataFrame(rows, columns=columns)
 st.sidebar.title("🇮🇳 SmartSeva")
 language = st.sidebar.selectbox(
     "🌐 Select Language",
-    ["English", "हिंदी", "मराठी"]
+    ["English", "Hindi", "Marathi"]
 )
+
 translations = {
     "English": {
-        "home": "Home",
-        "finder": "Scheme Finder",
-        "eligibility": "Eligibility Checker",
-        "details": "Scheme Details",
-        "guide": "Application Guide"
+        "title": "Government Scheme Finder",
+        "search": "Search"
     },
-
-    "हिंदी": {
-        "home": "मुख्य पृष्ठ",
-        "finder": "योजना खोजें",
-        "eligibility": "पात्रता जांचें",
-        "details": "योजना की जानकारी",
-        "guide": "आवेदन मार्गदर्शिका"
+    "Hindi": {
+        "title": "सरकारी योजना खोजक",
+        "search": "खोजें"
     },
-
-    "मराठी": {
-        "home": "मुख्यपृष्ठ",
-        "finder": "योजना शोधा",
-        "eligibility": "पात्रता तपासा",
-        "details": "योजनेची माहिती",
-        "guide": "अर्ज मार्गदर्शक"
+    "Marathi": {
+        "title": "सरकारी योजना शोधक",
+        "search": "शोधा"
     }
 }
 
